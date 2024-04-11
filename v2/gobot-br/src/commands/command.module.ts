@@ -2,22 +2,30 @@ import { Inject, Logger, LoggerService, Module, OnApplicationBootstrap, OnApplic
 import { PingCommand } from "./ping/ping.command";
 import { COMMANDS, Command } from "./command";
 import { Environment } from "src/app.configuration";
+import { HelpCommand } from "./help/help.command";
+import { FirstStepsCommand } from "./links/firstSteps.command";
+import { CompileCommand } from "./compile/compile.command";
+import { IdeasCommand } from "./ideas/ideas.command";
 
 @Module({
     providers: [
         Environment,
         PingCommand,
+        HelpCommand,
+        FirstStepsCommand,
+        CompileCommand,
+        IdeasCommand,
         {
             provide: COMMANDS,
-            useFactory: (ping) => [ping],
-            inject: [PingCommand]
+            useFactory: (ping, help, steps, compile, ideas) => [ping, help, steps, compile, ideas],
+            inject: [PingCommand, HelpCommand, FirstStepsCommand, CompileCommand, IdeasCommand]
         }
     ],
     exports: [
         {
             provide: COMMANDS,
-            useFactory: (ping) => [ping],
-            inject: [PingCommand]
+            useFactory: (ping, help, steps, compile, ideas) => [ping, help, steps, compile, ideas],
+            inject: [PingCommand, HelpCommand, FirstStepsCommand, CompileCommand, IdeasCommand]
         }
     ]
 })

@@ -1,17 +1,17 @@
 import { InteractionResponseType } from 'discord-interactions';
 import { Command, DiscordCommandType } from '../command'
 
-export class FirstStepsCommand implements Command {
-    name: string = "primeirospassos";
-    description: string = "Mostra por onde todo iniciante deve começar";
+export class HelpCommand implements Command {
+    name: string = "help";
+    description: string = "Mostra como funciona os comandos";
     type: DiscordCommandType = DiscordCommandType.CHAT_INPUT;
-    
+
     handle(body: any) {
         return {
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
                 tts: false,
-                content: "É perigoso ir sozinho, pegue isso aqui \n \nhttps://docs.godotengine.org/pt_BR/stable/getting_started/step_by_step/index.html"
+                content: "Aguarde..."
             }
         };
     }
