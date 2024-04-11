@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { DiscordAuthenticationMiddleware } from './discord-authentication/discord-authentication.middleware';
 import { InteractionsModule } from './interactions/interactions.module';
 import { InteractionsController } from './interactions/interactions.controller';
-import { Environment } from './app.configuration.service';
+import { Environment } from './app.configuration';
 
 @Module({
   imports: [InteractionsModule],
