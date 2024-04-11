@@ -1,5 +1,5 @@
 import { InteractionResponseType } from "discord-interactions";
-import { Command, DiscordCommandType } from "./command";
+import { Command, DiscordCommandType } from "../command";
 
 export class PingCommand implements Command{
     name: string = "ping";

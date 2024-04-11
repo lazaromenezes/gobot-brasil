@@ -1,5 +1,5 @@
 import { Inject, Logger, LoggerService, Module, OnApplicationBootstrap, OnApplicationShutdown } from "@nestjs/common";
-import { PingCommand } from "./ping.command";
+import { PingCommand } from "./ping/ping.command";
 import { COMMANDS, Command } from "./command";
 import { Environment } from "src/app.configuration";
 
