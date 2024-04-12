@@ -26,7 +26,7 @@ RUN npm ci --omit=dev && npm cache clean --force
 USER node
 
 ## ---
-FROM node:lts-alpine
+FROM node:lts-slim
 
 WORKDIR /opt/gobot
 
