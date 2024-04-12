@@ -1,3 +1,4 @@
 .local.env
 scripts/
 dist/
+node_modules/
