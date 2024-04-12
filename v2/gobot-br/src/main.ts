@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Environment } from './app.configuration';
 import { NestApplicationOptions } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   
@@ -12,10 +12,8 @@ async function bootstrap() {
   }
   
   const app = await NestFactory.create(AppModule, initializationOptions);
-  
-  app.enableShutdownHooks();
-
-  await app.listen(new Environment().PORT);
+  const config = app.get(ConfigService);
+  await app.listen(config.get("PORT"));
 }
 
 bootstrap();

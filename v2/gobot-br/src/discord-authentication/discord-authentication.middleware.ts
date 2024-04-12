@@ -1,11 +1,11 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { verifyKeyMiddleware } from 'discord-interactions';
-import { Environment } from 'src/app.configuration';
 
 @Injectable()
 export class DiscordAuthenticationMiddleware implements NestMiddleware {
 
-  constructor(private environment: Environment){}
+  constructor(private environment: ConfigService){}
   
-  use = verifyKeyMiddleware(this.environment.DISCORD_PUBLIC_KEY);
+  use = verifyKeyMiddleware(this.environment.get("DISCORD_PUBLIC_KEY"));
 }

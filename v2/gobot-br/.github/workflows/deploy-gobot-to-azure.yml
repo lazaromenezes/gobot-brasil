@@ -44,6 +44,8 @@ jobs:
             {"name":"DISCORD_PUBLIC_KEY","value":"${{ secrets.DISCORD_PUBLIC_KEY }}", "slotSetting": false},
             {"name":"DISCORD_BOT_TOKEN","value":"${{ secrets.DISCORD_BOT_TOKEN }}", "slotSetting": false},
             {"name":"DOCKER_REGISTRY_SERVER_URL","value":"https://index.docker.io/v1", "slotSetting": false},
+            {"name":"GODOT_PATH","value":"/opt/bin/godot", "slotSetting": false},
+            {"name":"SCRIPTS_PATH","value":"/tmp", "slotSetting": false},
           ]'
 
       - name: 'Deploy to Web App'

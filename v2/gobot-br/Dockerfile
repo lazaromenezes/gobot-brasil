@@ -33,5 +33,8 @@ WORKDIR /opt/gobot
 COPY --chown=node:node --from=builder /opt/gobot/dist ./dist
 COPY --chown=node:node --from=runtime /opt/gobot/node_modules ./node_modules
 
+COPY --chown=node:node --chmod=500 godot.64 /opt/bin/godot
+COPY --chown=node:node project.godot /opt/bin/project.godot
+
 ENTRYPOINT ["node", "/opt/gobot/dist/main"]
 

@@ -1,8 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Command } from "../command";
-import { SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { InteractionResponseType } from "discord-interactions";
-import { EmbedBuilder } from "@discordjs/builders";
 
 @Injectable()
 export class DocsCommand implements Command{
@@ -54,7 +53,7 @@ export class DocsCommand implements Command{
             
             const embedMsg = new EmbedBuilder()
                 .setTitle(data.title)
-                .setColor([26, 96, 0xbe])
+                .setColor("#2596be")
                 .setThumbnail("https://docs.godotengine.org/en/stable/_static/docs_logo.png")
                 .setURL(data.domain + data.path)
                 .setFields(fields)

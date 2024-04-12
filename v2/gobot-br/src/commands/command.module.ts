@@ -1,34 +1,37 @@
 import { Inject, Logger, Module, OnApplicationBootstrap, OnApplicationShutdown } from "@nestjs/common";
 import { PingCommand } from "./ping/ping.command";
-import { COMMANDS, Command } from "./command";
-import { Environment } from "src/app.configuration";
+import { COMMANDS, Command, MODAL_HANDLERS } from "./command";
 import { HelpCommand } from "./help/help.command";
 import { FirstStepsCommand } from "./links/firstSteps.command";
 import { CompileCommand } from "./compile/compile.command";
 import { IdeasCommand } from "./ideas/ideas.command";
 import { DocsCommand } from "./docs/docs.command";
+import { TextCompileModalHandler } from "./compile/compile.text.command";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 @Module({
     providers: [
-        Environment,
         PingCommand,
         HelpCommand,
         FirstStepsCommand,
         CompileCommand,
         IdeasCommand,
-        DocsCommand,
+        DocsCommand,        
         {
             provide: COMMANDS,
             useFactory: (ping, help, steps, compile, ideas, docs) => [ping, help, steps, compile, ideas, docs],
             inject: [PingCommand, HelpCommand, FirstStepsCommand, CompileCommand, IdeasCommand, DocsCommand]
-        }
+        },
+        TextCompileModalHandler,
+        {
+            provide: MODAL_HANDLERS,
+            useFactory: (textCompile) => [textCompile],
+            inject: [TextCompileModalHandler]
+        },
     ],
     exports: [
-        {
-            provide: COMMANDS,
-            useFactory: (ping, help, steps, compile, ideas, docs) => [ping, help, steps, compile, ideas, docs],
-            inject: [PingCommand, HelpCommand, FirstStepsCommand, CompileCommand, IdeasCommand, DocsCommand]
-        }
+        {provide: COMMANDS, useExisting: COMMANDS},
+        {provide: MODAL_HANDLERS, useExisting: MODAL_HANDLERS}
     ]
 })
 export class CommandsModule implements OnApplicationBootstrap{
@@ -37,15 +40,15 @@ export class CommandsModule implements OnApplicationBootstrap{
 
     constructor(
         @Inject(COMMANDS) private commands: Array<Command>,
-        private environment: Environment
+        private config: ConfigService
     ){
         this.logger = new Logger(CommandsModule.name)
-        this.endpoint = `https://discord.com/api/v10/applications/${this.environment.DISCORD_APP_ID}/commands`;
+        this.endpoint = `https://discord.com/api/v10/applications/${this.config.get("DISCORD_APP_ID")}/commands`;
     }
 
     async onApplicationBootstrap(): Promise<void> {
-        // if(!await this.clearCommands())
-        //     this.logger.error("Failed to clear commands");
+        if(!await this.clearCommands())
+            this.logger.error("Failed to clear commands");
         await this.registerCommands();
     }
 
@@ -73,7 +76,7 @@ export class CommandsModule implements OnApplicationBootstrap{
     private sendDiscordRequest(body: string){
         return fetch(this.endpoint, {
             headers: {
-                Authorization: `Bot ${this.environment.DISCORD_BOT_TOKEN}`,
+                Authorization: `Bot ${this.config.get("DISCORD_BOT_TOKEN")}`,
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             method: 'PUT',
