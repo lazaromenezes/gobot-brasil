@@ -22,9 +22,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: |
-          lazarodm/gobot-godot-br:${{ github.sha }}
-          latest
+          tags:
+          - lazarodm/gobot-godot-br:${{ github.sha }}
+          - latest
   
   deploy:
     runs-on: ubuntu-latest
