@@ -51,4 +51,4 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          images: lazarodm/fortune-api:${{ github.sha }}
+          images: lazarodm/gobot-godot-br:latest
