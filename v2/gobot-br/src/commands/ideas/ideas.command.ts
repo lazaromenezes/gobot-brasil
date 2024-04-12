@@ -1,10 +1,16 @@
 import { InteractionResponseType } from 'discord-interactions';
-import { Command, DiscordCommandType } from '../command'
+import { Command } from '../command'
+import { SlashCommandBuilder } from 'discord.js';
 
 export class IdeasCommand implements Command {
     name: string = "geradordeideias";
-    description: string = "Retorna uma ideia aleatória de game utilizando as tags da steam";
-    type: DiscordCommandType = DiscordCommandType.CHAT_INPUT;
+    
+    toJSON() {
+        return new SlashCommandBuilder()
+            .setName(this.name)
+            .setDescription("retorna uma ideia aleatória de game utilizando as tags da steam")
+            .toJSON();
+    }
 
     handle(body: any) {
         return {

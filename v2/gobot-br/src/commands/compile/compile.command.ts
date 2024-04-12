@@ -1,10 +1,16 @@
 import { InteractionResponseType } from 'discord-interactions';
-import { Command, DiscordCommandType } from '../command'
+import { Command } from '../command'
+import { SlashCommandBuilder } from 'discord.js';
 
 export class CompileCommand implements Command {
     name: string = "compilar";
-    description: string = "Roda o script inserido";
-    type: DiscordCommandType = DiscordCommandType.CHAT_INPUT;
+
+    toJSON(): any {
+        return new SlashCommandBuilder()
+        .setName(this.name)
+        .setDescription("Roda o script inserido")
+        .toJSON();
+    }
 
     handle(body: any) {
         return {

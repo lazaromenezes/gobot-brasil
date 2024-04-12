@@ -8,7 +8,7 @@ export class InteractionsController {
     constructor(@Inject(COMMANDS) private commands: Array<Command>){}
 
     @Post()
-    public discordInteraction(@Req() request: any){
+    public async discordInteraction(@Req() request: any){
         console.log("Interaction received");
         console.log(request.body);
 
@@ -20,9 +20,8 @@ export class InteractionsController {
         if(request.body.type === InteractionType.APPLICATION_COMMAND){
             var command: Command = this.commands.filter(c => c.name === request.body.data.name)[0];
 
-            var response = command.handle(request.body);
+            var response = await command.handle(request.body);
 
-            console.log("Interaction received");
             console.log(response);
 
             return response;

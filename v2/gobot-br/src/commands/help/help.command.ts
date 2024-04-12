@@ -1,10 +1,17 @@
 import { InteractionResponseType } from 'discord-interactions';
-import { Command, DiscordCommandType } from '../command'
+import { Command } from '../command'
+import { SlashCommandBuilder } from 'discord.js';
 
 export class HelpCommand implements Command {
     name: string = "help";
-    description: string = "Mostra como funciona os comandos";
-    type: DiscordCommandType = DiscordCommandType.CHAT_INPUT;
+
+    toJSON(): any {
+        return new SlashCommandBuilder()
+        .setName(this.name)
+        .setDescription("Mostra como funciona os comandos")
+        .addStringOption(option => option.setName('comando').setDescription("fale um comando específico"))
+        .toJSON();
+    }
 
     handle(body: any) {
         return {
